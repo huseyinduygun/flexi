@@ -1,0 +1,9 @@
+RewriteEngine On
+
+RewriteRule ^flexi index.php [L]
+RewriteRule ^views index.php [L]
+RewriteRule ^controller index.php [L]
+RewriteRule ^lib index.php [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* index.php [L]
