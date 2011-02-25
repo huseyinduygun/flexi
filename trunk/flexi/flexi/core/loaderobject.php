@@ -8,20 +8,13 @@
 	 * <p>It's magic get and set methods are overrided to allow fields to be added
 	 * more freely. It also has a loads for loading objects into it.</p>
 	 */
-	class FlexiObject
+	class LoaderObject extends FlexiObject
 	{
+		public $load;
+		
 		public function __construct()
 		{
-		}
-		
-		public function __get( $field )
-		{
-			return $this->$field;
-		}
-		
-		public function __set( $field, $val )
-		{
-			$this->$field = $val;
+			$this->load = new Loader( $this );
 		}
 	}
 ?>

@@ -3,7 +3,8 @@
 	{
 		public static $currentController = null;
 		
-		private $controller;
+        private $flexi;
+		private $parentObj;
 		
 		/** 
 		 * Creates a new Loader which is associated to work on the controller given.
@@ -12,9 +13,10 @@
 		 * 
 		 * @param controller The controller to associate with this loader.
 		 */
-		public function __construct( $controller )
+		public function __construct( $parentObj )
 		{
-			$this->controller = $controller;
+            $this->flexi = Flexi::getFlexi();
+			$this->parentObj = $parentObj;
 		}
 		
 		/**
@@ -25,7 +27,7 @@
 		 */
 		public function load( $file, $loadOnce=true )
 		{
-			Flexi::loadFile( $file, $loadOnce );
+			$this->flexi->loadFile( $file, $loadOnce );
 		}
 		
 		/**
@@ -65,13 +67,13 @@
 				$varName = trim( $varName );
 			}
 			if ( $varName === null || $varName === '' ) {
-                            $varName = strtolower( $className );
+                $varName = strtolower( $className );
 			}
 			
 			$this->load( $file );
 			
 			// stored so models can get access to this obj
-			Loader::$currentController = $this->controller;
+			Loader::$currentController = $this->parentObj;
 			
 			// if has parameters for the object being made
 			if ( func_num_args() > 3 ) {
@@ -83,19 +85,19 @@
 			}
 			
 			Loader::$currentController  = null;
-			$this->controller->$varName = $obj;
+			$this->parentObj->$varName = $obj;
 			return $obj;
 		}
 		
 		public function view( $file, $params=null )
 		{
-			$this->controller->__view( $file, $params );
+			$this->parentObj->__view( $file, $params );
 		}
 		
 		public function getView( $file, $params=null )
 		{
 		    ob_start();
-		    $this->controller->__view( $file, $params, false );
+		    $this->parentObj->__view( $file, $params, false );
 		    $html = ob_get_contents();
 		    ob_clean();
 		    

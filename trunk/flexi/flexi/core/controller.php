@@ -7,8 +7,9 @@
 	 * By default it loads and stores a Loader object that can be access via it's
 	 * 'load' field.
 	 */
-	class Controller extends FlexiObject
+	class Controller extends LoaderObject
 	{
+        private $flexi;
 		private $internalVars;
 		private $isInsideView;
         
@@ -19,8 +20,17 @@
 		{
 			parent::__construct();
             
+            $this->flexi = Flexi::getFlexi();
             $isInsideView = false;
 		}
+        
+        /**
+         * 
+         */
+        public function getFlexi()
+        {
+            return $this->flexi;
+        }
 		
 		/**
 		 * Sets the frame for this controller to use.
@@ -64,7 +74,7 @@
 				}
 			}
 			
-			$filePath = Flexi::findFile( $file );
+			$filePath = $this->getFlexi()->findFile( $file );
 			if ( $filePath === false ) {
 				throw new Exception( 'View not found: ' . $file );
 			} else {

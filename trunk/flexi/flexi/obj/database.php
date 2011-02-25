@@ -323,7 +323,7 @@
                 $isSelect = true;
 			}
 			
-			$debugSaveSQL = Flexi::get( 'database_save_sql' );
+			$debugSaveSQL = Flexi::getFlexi()->get( 'database_save_sql' );
 			if ( $debugSaveSQL ) {
 				$file = fopen( $debugSaveSQL, 'a' );
 				fwrite( $file, $sql . "\n" );
