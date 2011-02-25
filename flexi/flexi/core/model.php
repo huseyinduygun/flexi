@@ -9,7 +9,7 @@
 	 * On creation this will have a database stored under it's 'db' field.
 	 * You can access it as '$this->db'.
 	 */
-	class Model extends FlexiObject
+	class Model extends LoaderObject
 	{
 		/**
 		 * Creates a new Model.
@@ -23,11 +23,13 @@
 		{
 			parent::__construct();
 			
+            $flexi = Flexi::getFlexi();
+            
 			// setup the db
 			if ( $dbName == null ) {
-				$dbConfig = Flexi::getDefaultDatabase();
+				$dbConfig = $flexi->getDefaultDatabase();
 			} else {
-				$dbConfig = Flexi::getDatabase( $dbName );
+				$dbConfig = $flexi->getDatabase( $dbName );
 			}
 			
 			if ( $dbConfig == null ) {

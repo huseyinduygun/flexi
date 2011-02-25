@@ -5,12 +5,12 @@
 		public $method;
 		public $params;
 		
-		public function __construct()
+		public function __construct( $flexi )
 		{
-			$uriParts = Flexi::getURISplit();
+			$uriParts = $flexi->getURISplit();
 			
 			$this->controller = null;
-			$this->method   = null;
+			$this->method     = null;
 			$this->params     = array();
 			
 			foreach ( $uriParts as $part ) {
