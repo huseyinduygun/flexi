@@ -361,6 +361,23 @@
                 return $alt;
             }
         }
+        
+        /**
+         * Same as get, only this will run the value to be parsed as an int first.
+         * If the return value is not a numeric value, then this will return null.
+         */
+        public function getInt( $alt=null )
+        {
+            $this->ensureValue( 'get' );
+
+            if ( $this->alt !== false ) {
+                return $this->alt;
+            } else if ( $this->isValid() && is_numeric($this->value) ) {
+                return intval( $this->value, 10 );
+            } else {
+                return $alt;
+            }
+        }
 
         /**
          * The error will only be stored on the first time this is called.
